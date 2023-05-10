@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Api´s Harry Potter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="css.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <strong>API´s Para el CONTROL 2...</strong>
+                </a>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <header class="d-flex justify-content-center py-3">
+          <ul class="nav nav-pills">
+            <li class="nav-item"><a href="index.html" class="nav-link">👾RICK AND MORTY</a></li>
+            <li class="nav-item"><a href="A_harrypotter.html" class="nav-link active" aria-current="page">Harry Potter🪄</a></li>
+            <li class="nav-item"><a href="Tiempo.html" class="nav-link">☁ CLIMAS</a></li>
+          </ul>
+        </header>
+      </div>
+    
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">API PARA EL CONTROL 2</h1>
+        <p class="lead text-muted">Ahora mismo en estas viendo la api de Harry Potter:</p>
+        <p>
+          <p id="btn-ModoOscuro" class="btn btn-secondary my-2">Modo oscuro</p>
+          <p id="btn-ModoLuz" class="btn btn-primary my-2">modo luminoso</p>
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <div id="personajes-grid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+  crossorigin="anonymous">
+  </script>
+
+
+  <script>
+
+    //aca ira el boton para cambiar la pagina a un modo oscuro o luminoso segun le guste al cliente
+    
+    // Obtiene los botones para cambiar el modo de color
+    const btnModoOscuro = document.getElementById('btn-ModoOscuro');
+    const btnModoLuminoso = document.getElementById('btn-ModoLuz');
+
+    // evento que cambia al modo oscuro
+    btnModoOscuro.addEventListener('click', function() {
+      document.body.classList.add('ModoOscuro');
+    });
+
+    // Evento que cambia al modo luminoso
+    btnModoLuminoso.addEventListener('click', function() {
+      document.body.classList.remove('ModoOscuro');
+    });
+
+
+
+  fetch('https://harry-potter-api.onrender.com/personajes')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data); // Aquí puedes ver la información de los personajes en la consola
+
+    // Aquí recorremos el arreglo de personajes y creamos un elemento HTML para cada uno
+  for (let i = 0; i < data.length; i++) {
+    const personajes = data[i];
+    const card = document.createElement('div');
+    card.classList.add('col');
+   //que no sirve para haber dejado a los personajes en español arreglar en proxima actualizacion
+    if (personajes.estudianteDeHogwarts === 'false') {
+      personajes.estudianteDeHogwarts = 'No';
+    } else if (personajes.estudianteDeHogwarts === 'true') {
+      personajes.estudianteDeHogwarts = 'Si';
+    }
+
+    //Aca estara el Card para que en el html se puedan ver los personajes
+    card.innerHTML = `
+      <div class="card shadow-sm">
+        <img src="${personajes.imagen}" alt="${personajes.personaje}" class="bd-placeholder-img card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">${personajes.personaje}</h5>
+          <p class="card-text">Apodo: ${personajes.apodo}</p>
+          <p class="card-text">Estudiante howards: ${personajes.estudianteDeHogwarts}</p>
+          <p class="card-text">Casa de howards: ${personajes.casaDeHogwarts}</p>
+          <p class="card-text">Actor : ${personajes.interpretado_por}</p>
+          <div class="d-flex justify-content-between align-items-center">
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('personajes-grid').appendChild(card);
+  }
+  })
+  .catch(error => console.error(error));
+
+
+  </script>
+
+    
+</body>
+</html>

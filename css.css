@@ -1,0 +1,18 @@
+/* Estilos para el modo oscuro */
+.ModoOscuro {
+    background-color: #222;
+    color: #fff;
+}
+
+/* Estilos para el modo luminoso */
+body {
+    background-color: #fff;
+    color: #222;
+}
+
+.Clima{
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+

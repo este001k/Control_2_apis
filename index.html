@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
+
 
 <head>
     <meta charset="utf-8">
@@ -7,14 +8,16 @@
     <title>Control_Api´s</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="css.css">
 </head>
 
 <body>
+
     <header>
         <div class="navbar navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a href="#" class="navbar-brand d-flex align-items-center">
-                    <strong>API´s Para el CONTROL 2..</strong>
+                    <strong>API´s Para el CONTROL 2...</strong>
                 </a>
             </div>
         </div>
@@ -22,9 +25,9 @@
     <div class="container">
         <header class="d-flex justify-content-center py-3">
           <ul class="nav nav-pills">
-            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">👾RICK AND MORTY</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Harry Potter🪄</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">☁ CLIMAS</a></li>
+            <li class="nav-item"><a href="index.html" class="nav-link active" aria-current="page">👾RICK AND MORTY</a></li>
+            <li class="nav-item"><a href="A_harrypotter.html" class="nav-link">Harry Potter🪄</a></li>
+            <li class="nav-item"><a href="Tiempo.html" class="nav-link">☁ CLIMAS</a></li>
           </ul>
         </header>
       </div>
@@ -33,80 +36,91 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">API PARA EL CONTROL 2</h1>
-        <p class="lead text-muted">Ahora mismo en estas viendo la api de :</p>
+        <p class="lead text-muted">Ahora mismo en estas viendo la api de Rick and Morty:</p>
         <p>
-          <a href="#" class="btn btn-primary my-2">Main call to action</a>
-          <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+          <p id="btn-ModoOscuro" class="btn btn-secondary my-2">Modo oscuro</p>
+          <p id="btn-ModoLuz" class="btn btn-primary my-2">modo luminoso</p>
         </p>
       </div>
     </div>
   </section>
 
+  <div id="character-grid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"></div>
 
-  <div id="character-grid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-    <div class="card-body">
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        <div class="d-flex justify-content-between align-items-center">
-          <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-          </div>
-          <small class="text-muted">9 mins</small>
-        </div>
-      </div>
-  </div>
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+  </script>
   <script>
+    //aca ira el boton para cambiar la pagina a un modo oscuro o luminoso segun le guste al cliente
+    
+    // Obtiene los botones para cambiar el modo de color
+    const btnModoOscuro = document.getElementById('btn-ModoOscuro');
+    const btnModoLuminoso = document.getElementById('btn-ModoLuz');
 
-        fetch('https://rickandmortyapi.com/api/character')
-        .then(response => response.json())
-        .then(data => {
-            console.log(data); // Aquí puedes ver la información de los personajes en la consola
-            // Aquí puedes crear los elementos HTML para cada personaje
-        })
-            .catch(error => console.error(error));
+    // evento que cambia al modo oscuro
+    btnModoOscuro.addEventListener('click', function() {
+      document.body.classList.add('ModoOscuro');
+    });
 
-            fetch('https://rickandmortyapi.com/api/character')
-        .then(response => response.json())
-        .then(data => {
-            console.log(data); // Aquí puedes ver la información de los personajes en la consola
+    // Evento que cambia al modo luminoso
+    btnModoLuminoso.addEventListener('click', function() {
+      document.body.classList.remove('ModoOscuro');
+    });
+
+
+    fetch('https://rickandmortyapi.com/api/character')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data); // Aquí puedes ver la información de los personajes en la consola
 
     // Aquí recorremos el arreglo de personajes y creamos un elemento HTML para cada uno
-        for (let i = 0; i < data.results.length; i++) {
-        const character = data.results[i];
-        const card = document.createElement('div');
-        card.classList.add('col');
+    for (let i = 0; i < data.results.length; i++) {
+      const character = data.results[i];
+      const card = document.createElement('div');
+      card.classList.add('col');
 
-        card.innerHTML = `
-            <div class="card shadow-sm">
-            <img src="${character.image}" alt="${character.name}" class="bd-placeholder-img card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">${character.name}</h5>
-                <p class="card-text">Status: ${character.status}</p>
-                <p class="card-text">Species: ${character.species}</p>
-                <p class="card-text">Gender: ${character.gender}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                </div>
-                <small class="text-muted">ID: ${character.id}</small>
-                </div>
-            </div>
-            </div>
-        `;
+      // Aquí realizamos los cambios en las propiedades de los personajes para que puedan quedar en español
+      if (character.gender.toLowerCase() === 'unknown') {
+        character.gender = 'Desconocido';
+      } else if (character.gender.toLowerCase() === 'male') {
+        character.gender = 'Hombre';
+      } else if (character.gender.toLowerCase() === 'female') {
+        character.gender = 'Mujer';
+      }
 
-            document.getElementById('character-grid').appendChild(card);
-            }
-        })
-        .catch(error => console.error(error));
+      if (character.species.toLowerCase() === 'unknown') {
+        character.species = 'Desconocido';
+      } else if (character.species.toLowerCase() === 'human') {
+        character.species = 'Humano';
+      }
+
+      if (character.status.toLowerCase() === 'unknown') {
+        character.status = 'Desconocido';
+      } else if (character.status.toLowerCase() === 'alive') {
+        character.status = 'Vivo';
+      } else if (character.status.toLowerCase() === 'dead') {
+        character.status = 'Muerto';
+      }
+      //Aca estara el Card para que en el html se puedan ver los personajes
+      card.innerHTML = `
+        <div class="card shadow-sm">
+          <img src="${character.image}" alt="${character.name}" class="bd-placeholder-img card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">${character.name}</h5>
+            <p class="card-text">Estado: ${character.status}</p>
+            <p class="card-text">Especie: ${character.species}</p>
+            <p class="card-text">Genero: ${character.gender}</p>
+            <div class="d-flex justify-content-between align-items-center">
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('character-grid').appendChild(card);
+    }
+    })
+    .catch(error => console.error(error));
 
 
   </script>
